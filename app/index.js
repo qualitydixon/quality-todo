@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom'
-import routes from './config/routes'
+import React from 'react'
+import HomeContainer from './containers/HomeContainer'
 
-ReactDOM.render(routes, document.getElementById('app'))
+ReactDOM.render(<HomeContainer />, document.getElementById('app'))
