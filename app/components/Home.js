@@ -1,12 +1,36 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import { addItem } from '../modules/todo'
 
-export default class Home extends Component {
-  render () {
-    return (
-      <div>
-        {'This is your home component, which is currently set as the IndexRoute in app/config/routes.js. It shows when no other routes are active.'}<br/>
-        {'This boilerplate uses React, React-Router, Babel, ESLint, Webpack, and LESS'}
-      </div>
-    )
+function Home ({ dispatch, items }) {
+  let input
+  return (
+    <div>
+      <form onSubmit={e => {
+        e.preventDefault()
+        dispatch(addItem(input.value))
+        input.value = ''
+      }}>
+        <input ref={node => {
+          input = node
+        }} />
+        <button type='submit'>
+          {'Add Item'}
+        </button>
+      </form>
+      <ul>
+        {items.map((item, idx) =>
+          <li key={idx}>{item.text}</li>
+        )}
+      </ul>
+    </div>
+  )
+}
+
+function mapStateToProps (state) {
+  console.log(state)
+  return {
+    items: state.items
   }
 }
+export default connect(mapStateToProps)(Home)

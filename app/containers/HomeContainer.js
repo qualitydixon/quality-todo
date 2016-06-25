@@ -8,6 +8,7 @@ require('../stylesheets/main.less')
 class HomeContainer extends Component {
   componentDidMount () {
     // getItems
+    // dispatch()
   }
   render () {
     return (
@@ -20,7 +21,11 @@ HomeContainer.propTypes = {
   children: PropTypes.any
 }
 
+function mapStateToProps () {
+  return {}
+}
+
+
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(HomeContainer)
