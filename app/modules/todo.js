@@ -1,17 +1,21 @@
+import update from 'react/lib/update'
+import { makeID } from '../config/helpers'
 const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const TOGGLE_COMPLETE = 'TOGGLE_COMPLETE'
 
-export function addItem (text) {
+export function addItem (text, id) {
+  console.log(id)
   return {
     type: ADD_ITEM,
     text,
-    itemID: 1,
+    itemID: id,
     isComplete: false
   }
 }
 
 export function removeItem (itemID) {
+  console.log(itemID)
   return {
     type: REMOVE_ITEM,
     itemID
@@ -25,24 +29,40 @@ export function toggleComplete (itemID) {
   }
 }
 
-const initialState = {
-  items: [
-    {
-      id: 0,
-      text: 'get job',
-      isComplete: false
+function getInitialState () {
+  const id1 = makeID()
+  const id2 = makeID()
+  return {
+    [id1]: {
+      text: 'item1',
+      isComplete: false,
+      itemID: id1
+    },
+    [id2]: {
+      text: 'item2',
+      isComplete: false,
+      itemID: id2
     }
-  ]
+  }
 }
 
-const todo = (state = initialState, action) => {
+
+const todo = (state = getInitialState(), action) => {
+  let newState = Object.assign({}, state)
   switch (action.type) {
-    case 'ADD_TODO':
-      return Object.assign({}, state, action)
-    case 'TOGGLE_TODO':
-      return state.map(t =>
-        todo(t, action)
-      )
+    case ADD_ITEM:
+      return Object.assign({}, state, {[action.itemID]: {
+        text: action.text,
+        itemID: action.itemID,
+        isComplete: action.isComplete
+      }})
+    case REMOVE_ITEM:
+      delete newState[action.itemID]
+      return newState
+    case TOGGLE_COMPLETE:
+      console.log('toggle')
+      newState[action.itemID].isComplete = !state[action.itemID].isComplete
+      return newState
     default:
       return state
   }

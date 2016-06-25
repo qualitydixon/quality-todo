@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import Home from '../components/Home'
 import { connect } from 'react-redux'
+import { removeItem } from '../modules/todo'
+import { handleDelete } from '../config/api'
 import { bindActionCreators } from 'redux'
 require('../stylesheets/main.less')
 
@@ -12,7 +14,7 @@ class HomeContainer extends Component {
   }
   render () {
     return (
-      <Home />
+      <Home onDelete={handleDelete} />
     )
   }
 }

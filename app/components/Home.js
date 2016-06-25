@@ -1,36 +1,53 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { addItem } from '../modules/todo'
+import { addItem, removeItem, toggleComplete } from '../modules/todo'
+import { makeID } from '../config/helpers'
+import ListItem from './ListItem'
+import Menu from './Menu'
 
 function Home ({ dispatch, items }) {
   let input
+  const itemIDs = Object.keys(items)
   return (
-    <div>
-      <form onSubmit={e => {
+    <div className='home'>
+      <Menu />
+      <ul className='list'>
+        {itemIDs.map((itemID, idx) =>
+          <ListItem
+            key={idx}
+            itemID={items[itemID].itemID}
+            text={items[itemID].text}
+            isComplete={items[itemID].isComplete}
+            onDelete={() => dispatch(removeItem(itemID))}
+            onToggle={() => dispatch(toggleComplete(itemID))}
+          />
+        )}
+      </ul>
+      <form className='itemForm' onSubmit={e => {
         e.preventDefault()
-        dispatch(addItem(input.value))
+        dispatch(addItem(input.value, makeID()))
         input.value = ''
       }}>
-        <input ref={node => {
+        <input className='input' ref={node => {
           input = node
         }} />
-        <button type='submit'>
+        <button className='btn btn-info' type='submit'>
           {'Add Item'}
         </button>
       </form>
-      <ul>
-        {items.map((item, idx) =>
-          <li key={idx}>{item.text}</li>
-        )}
-      </ul>
     </div>
   )
+}
+
+Home.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  items: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
   console.log(state)
   return {
-    items: state.items
+    items: state
   }
 }
 export default connect(mapStateToProps)(Home)

@@ -4,8 +4,20 @@
   <meta charset="UTF-8">
   <title>quality-todo</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
   <div id="app"></div>
 </body>
 </html>
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCPsZyfG0OAt5fGM8aYO_Od-qqrZO23Zuc",
+    authDomain: "quality-todo.firebaseapp.com",
+    databaseURL: "https://quality-todo.firebaseio.com",
+    storageBucket: "quality-todo.appspot.com",
+  };
+  firebase.initializeApp(config);
+</script>
