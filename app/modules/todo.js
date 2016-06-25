@@ -1,7 +1,9 @@
 import update from 'react/lib/update'
 import { makeID } from '../config/helpers'
+
 const ADD_ITEM = 'ADD_ITEM'
 const REMOVE_ITEM = 'REMOVE_ITEM'
+const UPDATE_ITEM = 'UPDATE_ITEM'
 const TOGGLE_COMPLETE = 'TOGGLE_COMPLETE'
 
 export function addItem (text, id) {
@@ -19,6 +21,15 @@ export function removeItem (itemID) {
   return {
     type: REMOVE_ITEM,
     itemID
+  }
+}
+
+export function updateItem (text, itemID) {
+  console.log('update')
+  return {
+    type: UPDATE_ITEM,
+    itemID,
+    text
   }
 }
 
@@ -58,6 +69,9 @@ const todo = (state = getInitialState(), action) => {
       }})
     case REMOVE_ITEM:
       delete newState[action.itemID]
+      return newState
+    case UPDATE_ITEM:
+      newState[action.itemID].text = action.text
       return newState
     case TOGGLE_COMPLETE:
       console.log('toggle')

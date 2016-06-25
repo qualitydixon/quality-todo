@@ -28,9 +28,10 @@ function Home ({ dispatch, items }) {
         dispatch(addItem(input.value, makeID()))
         input.value = ''
       }}>
-        <input className='input' ref={node => {
-          input = node
-        }} />
+        <input
+          placeholder='add item'
+          ref={node => { input = node }}
+        />
         <button className='btn btn-info' type='submit'>
           {'Add Item'}
         </button>
