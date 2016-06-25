@@ -1,4 +1,3 @@
-import update from 'react/lib/update'
 import { makeID } from '../config/helpers'
 
 const ADD_ITEM = 'ADD_ITEM'
@@ -58,7 +57,7 @@ function getInitialState () {
 }
 
 
-const todo = (state = getInitialState(), action) => {
+const items = (state = getInitialState(), action) => {
   let newState = Object.assign({}, state)
   switch (action.type) {
     case ADD_ITEM:
@@ -82,4 +81,4 @@ const todo = (state = getInitialState(), action) => {
   }
 }
 
-export default todo
+export default items

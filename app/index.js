@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
-import todo from './modules/todo'
+import * as reducers from './modules'
 import HomeContainer from './containers/HomeContainer'
 
-let store = createStore(todo)
+let store = createStore(combineReducers({...reducers}))
 console.log(store)
 console.log(store.getState())
 

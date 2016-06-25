@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { addItem, removeItem, toggleComplete } from '../modules/todo'
+import { addItem, removeItem, toggleComplete } from '../modules/items'
 import { makeID } from '../config/helpers'
 import ListItem from './ListItem'
 import Menu from './Menu'
@@ -48,7 +48,7 @@ Home.propTypes = {
 function mapStateToProps (state) {
   console.log(state)
   return {
-    items: state
+    items: state.items
   }
 }
 export default connect(mapStateToProps)(Home)

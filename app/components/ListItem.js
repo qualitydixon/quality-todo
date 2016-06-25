@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { updateItem } from '../modules/todo'
+import { updateItem } from '../modules/items'
 
 export default function ListItem (props) {
   const className = props.isComplete ? 'completed' : ''
@@ -16,6 +16,7 @@ export default function ListItem (props) {
           input.blur()
         }}>
         <input
+          className={className}
           onChange={() => props.dispatch(updateItem(input.value, props.itemID))}
           value={props.text}
           ref={node => { input = node }}
