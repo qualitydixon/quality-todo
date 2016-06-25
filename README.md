@@ -1,12 +1,9 @@
-# react-kickstart
-My own little React boilerplate.
-
-[DEMO](http://qualitydixon.github.io/react-kickstart/)
+# quality-todo
 
 ## In this project...
 
 - React
-- React Router
+- Redux
 - Webpack
 - LESS
 - ESLint (standard)
@@ -14,12 +11,11 @@ My own little React boilerplate.
 
 ## Installation
 
-Just fork and clone this repo, run `npm install`, then `npm run start`. Then go to `http://localhost:8080/` in your browser. You should see this:
-
-![alt text](https://github.com/qualitydixon/react-kickstart/blob/master/react-kickstart-screen.png)
+Just fork and clone this repo, run `npm install`, then `npm run start`. Then go to `http://localhost:8080/` in your browser.
 
 ## Todo
 
-- Implement Flow
-- Add testing
-- Add informative comments
+- Connect Redux devtools
+- Connect to Firebase
+- Improve UI
+- Add ability to switch between completed and todo tasks
