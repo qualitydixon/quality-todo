@@ -11,13 +11,13 @@ export default function ListItem (props) {
         className='itemForm'
         onSubmit={e => {
           e.preventDefault()
-          props.dispatch(updateItem(input.value, props.itemID))
+          props.dispatch(updateItem(input.value, props.isComplete))
           input.value = props.text
           input.blur()
         }}>
         <input
           className={className}
-          onChange={() => props.dispatch(updateItem(input.value, props.itemID))}
+          onChange={() => props.dispatch(updateItem(input.value, props.isComplete))}
           value={props.text}
           ref={node => { input = node }}
         />

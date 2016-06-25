@@ -1,20 +1,36 @@
-//import { ref } from './constants'
+require('firebase/database')
+let firebase = require('firebase/app')
 
-/*
-export function saveToItems (item) {
-  const itemId = ref.child('items').push().key()
-  const itemPromise = ref.child(`items/${itemId}`).set({...item, itemId})
-  return {
-    itemId,
-    itemPromise
-  }
+let config = {
+  apiKey: 'AIzaSyCPsZyfG0OAt5fGM8aYO_Od-qqrZO23Zuc',
+  authDomain: 'quality-todo.firebaseapp.com',
+  databaseURL: 'https://quality-todo.firebaseio.com',
+  storageBucket: 'quality-todo.appspot.com'
 }
-*/
+firebase.initializeApp(config)
 
-export function writeItem (db, itemID, text, isComplete) {
+let db = firebase.database()
+
+export function fetchItems () {
+  return db.ref('items/').once('value')
+    .then((snapshot) => snapshot.val() || {})
+}
+
+export function writeItem (itemID, text, isComplete) {
   db.ref('items/' + itemID).set({
-    itemID: itemID,
-    text: text,
-    isComplete: isComplete
+    itemID,
+    text,
+    isComplete
   })
+}
+
+export function setComplete (itemID, isComplete) {
+  db.ref('items/' + itemID).update({
+    itemID: itemID,
+    isComplete: !isComplete
+  })
+}
+
+export function deleteItem (itemID) {
+  db.ref('items/' + itemID).remove()
 }

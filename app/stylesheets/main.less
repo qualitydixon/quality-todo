@@ -1,8 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 
-@background: #424242;
-@fontColor: #F4F4F4;
+@background: #B0BEC5;
+@fontColor: #424242;
+@cardBackground: #F4F4F4;
 @mainFont: Roboto;
+
+@boxShadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
 body {
     background: @background;
@@ -20,13 +23,21 @@ body {
     margin: 10px;
 }
 
+.menu {
+    border: 1px solid red;
+    margin-top: 15px;
+}
+
 .list {
     color: @fontColor;
     align-items: center;
     justify-content: center;
+    border: 1px solid red;
 }
 
 .card {
+    background: @cardBackground;
+    box-shadow: @boxShadow;
     display: flex;
     justify-content: center;
     width: 30vw;

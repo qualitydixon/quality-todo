@@ -1,21 +1,15 @@
 import { makeID } from '../config/helpers'
-import { writeItem } from '../config/api'
-require('firebase/database')
-var firebase = require('firebase/app')
-
-  // Initialize Firebase
-let config = {
-  apiKey: 'AIzaSyCPsZyfG0OAt5fGM8aYO_Od-qqrZO23Zuc',
-  authDomain: 'quality-todo.firebaseapp.com',
-  databaseURL: 'https://quality-todo.firebaseio.com',
-  storageBucket: 'quality-todo.appspot.com'
-}
-firebase.initializeApp(config)
+import { writeItem, deleteItem, fetchItems, setComplete } from '../config/api'
 
 const ADD_ITEM = 'ADD_ITEM'
+const ADD_ITEMS = 'ADD_ITEMS'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const UPDATE_ITEM = 'UPDATE_ITEM'
 const TOGGLE_COMPLETE = 'TOGGLE_COMPLETE'
+
+const FETCHING_ITEMS = 'FETCHING_ITEMS'
+const FETCHING_ITEMS_SUCCESS = 'FETCHING_ITEMS_SUCCESS'
+const FETCHING_ITEMS_ERROR = 'FETCHING_ITEMS_ERROR'
 
 export function addItem (text, id) {
   console.log(id)
@@ -27,6 +21,13 @@ export function addItem (text, id) {
   }
 }
 
+export function addItems (items) {
+  return {
+    type: ADD_ITEMS,
+    items
+  }
+}
+
 export function removeItem (itemID) {
   console.log(itemID)
   return {
@@ -35,58 +36,76 @@ export function removeItem (itemID) {
   }
 }
 
-export function updateItem (text, itemID) {
+export function updateItem (text, itemID, isComplete) {
   console.log('update')
   return {
     type: UPDATE_ITEM,
     itemID,
-    text
+    text,
+    isComplete
   }
 }
 
-export function toggleComplete (itemID) {
+export function toggleComplete (itemID, isComplete) {
   return {
     type: TOGGLE_COMPLETE,
-    itemID
+    itemID,
+    isComplete
   }
 }
 
-function getInitialState () {
-  const id1 = makeID()
-  const id2 = makeID()
+export function fetchingItems () {
   return {
-    [id1]: {
-      text: 'item1',
-      isComplete: false,
-      itemID: id1
-    },
-    [id2]: {
-      text: 'item2',
-      isComplete: false,
-      itemID: id2
-    }
+    type: FETCHING_ITEMS
   }
 }
 
+export function fetchingItemsSuccess () {
+  return {
+    type: FETCHING_ITEMS_SUCCESS
+  }
+}
 
-const items = (state = getInitialState(), action) => {
+export function fetchingItemsError () {
+  return {
+    type: FETCHING_ITEMS_ERROR
+  }
+}
+
+export function fetchAndHandleItems (dispatch) {
+  console.log('!!!!!!!')
+  dispatch(fetchingItems())
+
+  fetchItems()
+    .then((items) => dispatch(addItems(items)))
+    .then(() => dispatch(fetchingItemsSuccess()))
+    .catch((error) => dispatch(fetchingItemsError(error)))
+}
+
+const items = (state = {}, action) => {
   let newState = Object.assign({}, state)
   switch (action.type) {
     case ADD_ITEM:
-      writeItem(firebase.database(), action.itemID, action.text, action.isComplete)
+      writeItem(action.itemID, action.text, action.isComplete)
       return Object.assign({}, state, {[action.itemID]: {
         text: action.text,
         itemID: action.itemID,
         isComplete: action.isComplete
       }})
+    case ADD_ITEMS:
+      console.log('Add Items')
+      return Object.assign({}, state, action.items)
     case REMOVE_ITEM:
       delete newState[action.itemID]
+      deleteItem(action.itemID)
       return newState
     case UPDATE_ITEM:
+      writeItem(action.itemID, action.text, action.isComplete)
       newState[action.itemID].text = action.text
       return newState
     case TOGGLE_COMPLETE:
       console.log('toggle')
+      setComplete(action.itemID, action.isComplete)
       newState[action.itemID].isComplete = !state[action.itemID].isComplete
       return newState
     default:
