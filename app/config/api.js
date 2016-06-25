@@ -1,5 +1,4 @@
 //import { ref } from './constants'
-import { removeItem } from '../modules/todo'
 
 /*
 export function saveToItems (item) {
@@ -12,7 +11,10 @@ export function saveToItems (item) {
 }
 */
 
-export function handleDelete (itemID, dispatch) {
-  console.log('delete', itemID)
-  dispatch(removeItem(itemID))
+export function writeItem (db, itemID, text, isComplete) {
+  db.ref('items/' + itemID).set({
+    itemID: itemID,
+    text: text,
+    isComplete: isComplete
+  })
 }
