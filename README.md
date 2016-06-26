@@ -1,5 +1,6 @@
 # quality-todo
 
+[LIVE DEMO](https://qualitydixon.github.io/quality-todo/)
 ## In this project...
 
 - React
