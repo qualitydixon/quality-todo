@@ -43,7 +43,7 @@ class List extends Component {
               isComplete={items[itemID].isComplete}
               onDelete={() => dispatch(removeItem(itemID))}
               onToggle={() => dispatch(toggleComplete(itemID, items[itemID].isComplete))}
-              onUpdate={(newVal) => dispatch(updateItem(itemID, newVal))}
+              onUpdate={newVal => dispatch(updateItem(itemID, newVal))}
             />
           )}
         </ul>

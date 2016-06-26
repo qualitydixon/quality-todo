@@ -40,5 +40,3 @@ ListItem.propTypes = {
   onToggle: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired
 }
-
-export default ListItem

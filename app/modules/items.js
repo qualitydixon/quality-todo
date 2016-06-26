@@ -56,7 +56,7 @@ export function fetchingItems () {
 }
 /*
   Currently, nothing is done with the FETCHING_ITEMS_SUCCESS and FETCHING_ITEMS_ERROR but
-  this structure is best practice for retrieving data.
+  this structure is (I think) best practice for retrieving data.
 */
 export function fetchingItemsSuccess () {
   return {
