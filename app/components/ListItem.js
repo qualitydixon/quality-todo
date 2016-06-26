@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { updateItem } from '../modules/items'
 
-export default function ListItem (props) {
-  const className = props.isComplete ? 'completed' : ''
+export default function ListItem ({itemID, text, isComplete, onUpdate, onToggle, onDelete}) {
+  const makeOpaque = isComplete ? 'completed' : ''
+  const makeCheckGreen = isComplete ? 'setGreen' : ''
   let input
   return (
     <li className='card'>
@@ -11,33 +10,35 @@ export default function ListItem (props) {
         className='itemForm'
         onSubmit={e => {
           e.preventDefault()
-          props.dispatch(updateItem(input.value, props.isComplete))
-          input.value = props.text
+          input.value = text
           input.blur()
         }}>
         <input
-          className={className}
-          onChange={() => props.dispatch(updateItem(input.value, props.isComplete))}
-          value={props.text}
+          className={makeOpaque}
+          onChange={() => onUpdate(input.value)}
+          value={text}
           ref={node => { input = node }}
         />
       </form>
-      <button onClick={props.onDelete} className='btn btn-danger delete'>
-        <i className='fa fa-trash' aria-hidden='true'></i>
-      </button>
-      <button onClick={props.onToggle} className='btn btn-info'>
-        <i className='fa fa-check' aria-hidden='true'></i>
-      </button>
+      <div>
+        <button onClick={onToggle}>
+          <i className={`fa fa-check-circle-o ${makeCheckGreen}`} aria-hidden='true'></i>
+        </button>
+        <button onClick={onDelete}>
+          <i className='fa fa-trash' aria-hidden='true'></i>
+        </button>
+      </div>
     </li>
   )
 }
 
 ListItem.propTypes = {
+  itemID: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   isComplete: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
   onToggle: PropTypes.func.isRequired,
-  itemID: PropTypes.string.isRequired
+  onUpdate: PropTypes.func.isRequired
 }
 
-export default connect()(ListItem)
+export default ListItem

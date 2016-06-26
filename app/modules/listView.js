@@ -8,7 +8,6 @@ export function setView (view) {
 }
 
 const listView = (state = 'ALL', action) => {
-  console.log(action.view)
   switch (action.type) {
     case SET_VIEW:
       return action.view

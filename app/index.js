@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom'
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import * as reducers from './modules'
-import HomeContainer from './containers/HomeContainer'
+import List from './components/List'
 
 let store = createStore(combineReducers({...reducers}))
-console.log(store)
-console.log(store.getState())
 
 ReactDOM.render(<Provider store={store}>
-                  <HomeContainer />
+                  <List />
                 </Provider>, document.getElementById('app'))

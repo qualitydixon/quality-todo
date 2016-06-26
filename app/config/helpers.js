@@ -1,10 +1,10 @@
 export function makeID () {
-  let text = ''
-  let possible = 'abcdefghijklmnopqrstuvwxyz0123456789'
+  let id = ''
+  const possible = 'abcdefghijklmnopqrstuvwxyz0123456789'
 
   for (let i = 0; i < 5; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length))
+    id += possible.charAt(Math.floor(Math.random() * possible.length))
   }
 
-  return text
+  return id
 }

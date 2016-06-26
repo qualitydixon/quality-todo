@@ -1,7 +1,6 @@
 var firebase = require('firebase/app')
 require('firebase/database')
 
-  // Initialize Firebase
 let config = {
   apiKey: 'AIzaSyCPsZyfG0OAt5fGM8aYO_Od-qqrZO23Zuc',
   authDomain: 'quality-todo.firebaseapp.com',

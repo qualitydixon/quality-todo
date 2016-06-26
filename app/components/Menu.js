@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
 
-export default function Menu (props) {
+export default function Menu ({showAll, showComplete, showTodo}) {
   return (
     <div className='menu'>
-      <button onClick={props.showAll}>{'All'}</button>
-      <button onClick={props.showComplete} className='btn btn-danger delete'>{'Completed'}</button>
-      <button onClick={props.showTodo} className='btn btn-info'>{'Todo'}</button>
+      <button onClick={showAll} className=''>{'All'}</button>
+      <button onClick={showComplete} className=''>{'Completed'}</button>
+      <button onClick={showTodo} className=''>{'Todo'}</button>
     </div>
   )
 }

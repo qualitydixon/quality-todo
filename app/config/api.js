@@ -1,7 +1,6 @@
 require('firebase/database')
-let firebase = require('firebase/app')
-
-let config = {
+const firebase = require('firebase/app')
+const config = {
   apiKey: 'AIzaSyCPsZyfG0OAt5fGM8aYO_Od-qqrZO23Zuc',
   authDomain: 'quality-todo.firebaseapp.com',
   databaseURL: 'https://quality-todo.firebaseio.com',
@@ -9,14 +8,14 @@ let config = {
 }
 firebase.initializeApp(config)
 
-let db = firebase.database()
+const db = firebase.database()
 
 export function fetchItems () {
   return db.ref('items/').once('value')
     .then((snapshot) => snapshot.val() || {})
 }
 
-export function writeItem (itemID, text, isComplete) {
+export function write (itemID, text, isComplete) {
   db.ref('items/' + itemID).set({
     itemID,
     text,
@@ -24,9 +23,14 @@ export function writeItem (itemID, text, isComplete) {
   })
 }
 
+export function update (itemID, text) {
+  db.ref('items/' + itemID).update({
+    text
+  })
+}
+
 export function setComplete (itemID, isComplete) {
   db.ref('items/' + itemID).update({
-    itemID: itemID,
     isComplete: !isComplete
   })
 }
