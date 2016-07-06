@@ -16,7 +16,8 @@ Just fork and clone this repo, run `npm install`, then `npm run start`. Then go 
 
 ## Todo
 
-- Connect Redux devtools.
+- ~~Connect Redux devtools.~~
 - ~~Connect to Firebase.~~
 - ~~Improve UI.~~
 - ~~Add ability to switch between completed and todo tasks.~~
+- Subscribe to database.

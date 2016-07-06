@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import * as reducers from './modules'
 import List from './components/List'
 
-let store = createStore(combineReducers({...reducers}))
+let store = createStore(combineReducers({...reducers}), window.devToolsExtension && window.devToolsExtension())
 
 ReactDOM.render(<Provider store={store}>
                   <List />
