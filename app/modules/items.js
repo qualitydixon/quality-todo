@@ -1,6 +1,7 @@
-import { write, update, deleteItem, fetchItems, setComplete } from '../config/api'
+import { write, update, deleteItem, fetchItems, setComplete, listenToItems } from '../config/api'
 
 const ADD_ITEM = 'ADD_ITEM'
+const ADD_ITEM_FROM_DB = 'ADD_ITEM_FROM_DB'
 const ADD_ITEMS = 'ADD_ITEMS'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const UPDATE_ITEM = 'UPDATE_ITEM'
@@ -13,6 +14,16 @@ const FETCHING_ITEMS_ERROR = 'FETCHING_ITEMS_ERROR'
 export function addItem (text, id) {
   return {
     type: ADD_ITEM,
+    text,
+    itemID: id,
+    isComplete: false
+  }
+}
+
+export function addItemFromDB (text, id) {
+  console.log('from action creator.')
+  return {
+    type: ADD_ITEM_FROM_DB,
     text,
     itemID: id,
     isComplete: false
@@ -69,10 +80,12 @@ export function fetchingItemsError () {
     type: FETCHING_ITEMS_ERROR
   }
 }
+export function addNewItem (item) {
+  dispatch(addItemFromDB(item.text, item.itemID))
+}
 
 export function fetchAndHandleItems (dispatch) {
   dispatch(fetchingItems())
-
   fetchItems()
     .then((items) => dispatch(addItems(items)))
     .then(() => dispatch(fetchingItemsSuccess()))
@@ -82,33 +95,34 @@ export function fetchAndHandleItems (dispatch) {
 const items = (state = {}, action) => {
   let newState = Object.assign({}, state)
   switch (action.type) {
-
     case ADD_ITEM:
       write(action.itemID, action.text, action.isComplete)
       return Object.assign({}, state, {[action.itemID]: {
         text: action.text,
         itemID: action.itemID,
         isComplete: action.isComplete
+      }})  
+    case ADD_ITEM_FROM_DB:
+      console.log('Add item from DB')
+      return Object.assign({}, state, {[action.itemID]: {
+        text: action.text,
+        itemID: action.itemID,
+        isComplete: action.isComplete
       }})
-
     case ADD_ITEMS:
       return Object.assign({}, state, action.items)
-
     case REMOVE_ITEM:
       delete newState[action.itemID]
       deleteItem(action.itemID)
       return newState
-
     case UPDATE_ITEM:
       update(action.itemID, action.text)
       newState[action.itemID].text = action.text
       return newState
-
     case TOGGLE_COMPLETE:
       setComplete(action.itemID, action.isComplete)
       newState[action.itemID].isComplete = !state[action.itemID].isComplete
       return newState
-
     default:
       return state
   }

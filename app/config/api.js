@@ -1,3 +1,4 @@
+import addNewItem from '../modules/items'
 require('firebase/database')
 const firebase = require('firebase/app')
 const config = {
@@ -9,6 +10,11 @@ const config = {
 firebase.initializeApp(config)
 
 const db = firebase.database()
+
+db.ref('items/').on('value', function(snapshot) {
+  console.log(snapshot.val())
+  //addNewItem(snapshot.val())
+})
 
 export function fetchItems () {
   return db.ref('items/').once('value')
